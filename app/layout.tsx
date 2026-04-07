@@ -6,24 +6,16 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { CustomCursor } from '@/components/ui/CustomCursor'
 import { siteConfig } from '@/data'
+import { headers } from 'next/headers'
 
 const playfair = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-playfair',
-  display: 'swap',
+  subsets: ['latin'], variable: '--font-playfair', display: 'swap',
 })
-
 const dmSans = DM_Sans({
-  subsets: ['latin'],
-  variable: '--font-dm-sans',
-  display: 'swap',
+  subsets: ['latin'], variable: '--font-dm-sans', display: 'swap',
 })
-
 const spaceMono = Space_Mono({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  variable: '--font-space-mono',
-  display: 'swap',
+  subsets: ['latin'], weight: ['400', '700'], variable: '--font-space-mono', display: 'swap',
 })
 
 export const metadata: Metadata = {
@@ -32,56 +24,33 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.siteName}`,
   },
   description: siteConfig.description,
-  keywords: ['konstruksi', 'kontraktor', 'arsitek', 'pembangunan', 'renovasi', 'Jakarta', 'Indonesia', 'properti'],
-  authors: [{ name: siteConfig.siteName }],
-  creator: siteConfig.siteName,
+  keywords: ['konstruksi', 'kontraktor', 'arsitek', 'pembangunan', 'renovasi', 'Jakarta', 'Indonesia'],
   openGraph: {
-    type: 'website',
-    locale: 'id_ID',
-    url: 'https://rofimain.com',
-    title: siteConfig.siteName,
-    description: siteConfig.description,
+    type: 'website', locale: 'id_ID',
+    title: siteConfig.siteName, description: siteConfig.description,
     siteName: siteConfig.siteName,
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: siteConfig.siteName,
-    description: siteConfig.description,
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
+  robots: { index: true, follow: true },
 }
 
 export const viewport: Viewport = {
-  themeColor: '#0A0A0B',
-  width: 'device-width',
-  initialScale: 1,
+  themeColor: '#0A0A0B', width: 'device-width', initialScale: 1,
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const headersList = headers()
+  const pathname = headersList.get('x-pathname') || ''
+  const isAdmin = pathname.startsWith('/admin')
+
   return (
-    <html
-      lang="id"
-      className={`${playfair.variable} ${dmSans.variable} ${spaceMono.variable}`}
-    >
+    <html lang="id" className={`${playfair.variable} ${dmSans.variable} ${spaceMono.variable}`}>
       <body className="bg-brand-dark text-brand-cream font-body antialiased">
-        <CustomCursor />
-        <Navbar />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+        {!isAdmin && <CustomCursor />}
+        {!isAdmin && <Navbar />}
+        <main className={isAdmin ? '' : 'min-h-screen'}>
+          {children}
+        </main>
+        {!isAdmin && <Footer />}
       </body>
     </html>
   )
