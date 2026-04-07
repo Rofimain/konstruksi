@@ -280,40 +280,7 @@
   animation: marqueeLTR 35s linear infinite;
 }
 
-/* Cursor custom */
-@media (hover: hover) {
-  body {
-    cursor: none;
-  }
-
-  a, button, [role="button"] {
-    cursor: none;
-  }
-}
-
-/* Hide default cursor */
-.cursor-dot {
-  position: fixed;
-  width: 8px;
-  height: 8px;
-  background: var(--color-gold);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transition: transform 0.1s ease;
-  mix-blend-mode: difference;
-}
-
-.cursor-ring {
-  position: fixed;
-  width: 40px;
-  height: 40px;
-  border: 1px solid rgba(201, 168, 76, 0.5);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  transition: all 0.15s ease;
-}
+/* Custom cursor removed — using default browser cursor */
 
 /* Page transition */
 .page-enter {

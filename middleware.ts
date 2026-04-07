@@ -6,8 +6,10 @@ const JWT_SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || 'fallback-secret-change-in-production'
 )
 
-const loginAttempts = new Map<string, { count: number; resetAt: number }>()
+// Public API routes yang tidak butuh auth
+const PUBLIC_API = ['/api/auth', '/api/settings/public']
 
+const loginAttempts = new Map<string, { count: number; resetAt: number }>()
 function isRateLimited(ip: string): boolean {
   const now = Date.now()
   const windowMs = 15 * 60 * 1000
@@ -26,7 +28,7 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0] || '127.0.0.1'
 
-  // Pass pathname ke layout via header
+  // Pass pathname ke layout via header (untuk detect admin route)
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-pathname', pathname)
 
@@ -40,8 +42,8 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Block API tanpa auth
-  if (pathname.startsWith('/api/') && pathname !== '/api/auth') {
+  // Protect API routes (kecuali yang public)
+  if (pathname.startsWith('/api/') && !PUBLIC_API.some(p => pathname.startsWith(p))) {
     const token = request.cookies.get('cms_auth')?.value
     if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     try {
@@ -68,5 +70,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|images|fonts).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|images|fonts|robots.txt).*)'],
 }

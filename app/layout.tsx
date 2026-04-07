@@ -4,7 +4,6 @@ import { Playfair_Display, DM_Sans, Space_Mono } from 'next/font/google'
 import './globals.css'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
-import { CustomCursor } from '@/components/ui/CustomCursor'
 import { siteConfig } from '@/data'
 import { headers } from 'next/headers'
 
@@ -45,7 +44,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="id" className={`${playfair.variable} ${dmSans.variable} ${spaceMono.variable}`}>
       <body className="bg-brand-dark text-brand-cream font-body antialiased">
-        {!isAdmin && <CustomCursor />}
         {!isAdmin && <Navbar />}
         <main className={isAdmin ? '' : 'min-h-screen'}>
           {children}
