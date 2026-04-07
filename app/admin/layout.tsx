@@ -33,7 +33,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Sidebar */}
       <aside className={`fixed left-0 top-0 h-full bg-brand-charcoal border-r border-brand-slate/30 z-50 flex flex-col transition-all duration-300 ${open ? 'w-60' : 'w-16'}`}>
         <div className="flex items-center justify-between px-4 h-16 border-b border-brand-slate/30 shrink-0">
-          {open && <Link href="/" target="_blank" className="flex flex-col"><span className="font-heading text-lg font-bold text-gold leading-none">ARKON</span><span className="text-[8px] tracking-[0.3em] text-brand-gray font-mono">CMS</span></Link>}
+          {open && <Link href="/" target="_blank" className="flex flex-col"><span className="font-heading text-lg font-bold text-gold leading-none">Rofimain</span><span className="text-[8px] tracking-[0.3em] text-brand-gray font-mono">CMS</span></Link>}
           <button onClick={() => setOpen(!open)} className="text-brand-silver hover:text-gold transition-colors ml-auto p-1">
             {open ? <X size={18} /> : <Menu size={18} />}
           </button>

@@ -29,7 +29,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-brand-black flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-10">
-          <div className="font-heading text-4xl font-bold text-gold mb-1">ARKON</div>
+          <div className="font-heading text-4xl font-bold text-gold mb-1">Rofimain</div>
           <div className="text-xs tracking-[0.3em] text-brand-gray font-mono uppercase">CMS Dashboard</div>
         </div>
         <div className="bg-brand-charcoal border border-brand-slate/30 p-8">
