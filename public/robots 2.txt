@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+
+# Block admin from all bots
+User-agent: *
+Disallow: /admin
+
+Sitemap: https://your-domain.com/sitemap.xml
