@@ -7,15 +7,9 @@ import { Footer } from '@/components/layout/Footer'
 import { siteConfig } from '@/data'
 import { headers } from 'next/headers'
 
-const playfair = Playfair_Display({
-  subsets: ['latin'], variable: '--font-playfair', display: 'swap',
-})
-const dmSans = DM_Sans({
-  subsets: ['latin'], variable: '--font-dm-sans', display: 'swap',
-})
-const spaceMono = Space_Mono({
-  subsets: ['latin'], weight: ['400', '700'], variable: '--font-space-mono', display: 'swap',
-})
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair', display: 'swap' })
+const dmSans   = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans', display: 'swap' })
+const spaceMono = Space_Mono({ subsets: ['latin'], weight: ['400', '700'], variable: '--font-space-mono', display: 'swap' })
 
 export const metadata: Metadata = {
   title: {
@@ -37,9 +31,17 @@ export const viewport: Viewport = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const headersList = headers()
-  const pathname = headersList.get('x-pathname') || ''
-  const isAdmin = pathname.startsWith('/admin')
+  // Deteksi admin dari header yang di-set middleware
+  // Fallback ke empty string kalau header tidak ada (misal di static pages)
+  let isAdmin = false
+  try {
+    const headersList = headers()
+    const pathname = headersList.get('x-pathname') || ''
+    isAdmin = pathname.startsWith('/admin')
+  } catch {
+    // headers() tidak tersedia di static context — bukan admin
+    isAdmin = false
+  }
 
   return (
     <html lang="id" className={`${playfair.variable} ${dmSans.variable} ${spaceMono.variable}`}>
